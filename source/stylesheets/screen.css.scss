@@ -245,7 +245,7 @@ body {
     // I know, it's hackish, but it's the simplist way to make the left
     // half of the content always this background color.
     .dark-box {
-        width: $examples-width;
+        width: 30%;
         background-color: $examples-bg;
         position: absolute;
         right: 0;
@@ -253,6 +253,7 @@ body {
         bottom: 0;
     }
     .lang-selector {
+        display: none;
         position: fixed;
         z-index: 50;
         border-bottom: 5px solid $lang-select-active-bg;
@@ -482,13 +483,22 @@ body {
 ////////////////////////////////////////////////////////////////////////////////
 // This is all the stuff that appears in the right half of the page
 .content {
-    pre,
+    pre {
+        background: #ececec;
+        padding-left: 30px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        width: 70%;
+        clear: right;
+        box-sizing: border-box;
+    }
+    //pre,
     blockquote {
         background-color: #ececec;
         color: black;
         padding: 2em $main-padding;
         margin: 0;
-        width: $examples-width;
+        width: 30%;
         //float: right;
         clear: right;
         box-sizing: border-box;
