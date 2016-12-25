@@ -11,6 +11,7 @@ includes:
   - introduction
   - configuration
   - typescript
+  - plugin-api
   - builtin-plugins
 
 search: true
