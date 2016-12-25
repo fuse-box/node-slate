@@ -12,6 +12,7 @@ includes:
   - configuration
   - bundle
   - typescript
+  - loader-api
   - plugin-api
   - builtin-plugins
 
