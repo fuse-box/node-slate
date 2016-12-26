@@ -534,20 +534,6 @@ body {
 // These are the styles for phones and tablets
 // There are also a couple styles disperesed
 @media (max-width: $tablet-width) {
-    .content {
-        pre {
-            background: #ececec;
-            padding-left: 30px;
-            padding-top: 10px;
-            padding-bottom: 10px;
-            width: 100%;
-            clear: right;
-            box-sizing: border-box;
-        }
-        blockquote {
-            width: 100%;
-        }
-    }
     .tocify-wrapper {
         left: -$nav-width;
         &.open {
@@ -567,6 +553,20 @@ body {
 }
 
 @media (max-width: $phone-width) {
+    .content {
+        pre {
+            background: #ececec;
+            padding-left: 30px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            width: 100%;
+            clear: right;
+            box-sizing: border-box;
+        }
+        blockquote {
+            width: 100%;
+        }
+    }
     .dark-box {
         display: none;
     }
