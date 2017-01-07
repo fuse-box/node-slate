@@ -15,6 +15,7 @@ includes:
   - typescript
   - loader-api
   - plugin-api
+  - tips
   - builtin-plugins
 
 search: true
