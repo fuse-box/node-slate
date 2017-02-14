@@ -1,0 +1,841 @@
+<!doctype html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Fuse-Box bundler / API Reference</title>
+    <link href="stylesheets/screen.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
+    <link href="stylesheets/highlight-default.css" rel="stylesheet" type="text/css" media="screen, print" />
+    <script src="javascripts/all.js" type="text/javascript"></script>
+  </head>
+
+  <body class="" data-languages="[&#34;javascript&#34;]">
+    <a href="#" id="nav-button"> <span>
+        NAV
+        <img alt="undefined" class="undefined" src="images/navbar.png">
+      </span> </a>
+    <div class="tocify-wrapper"> <img alt="undefined" class="undefined" src="images/logo.png">
+      <div class="lang-selector"> <a href="#" data-language-name="javascript">javascript</a> </div>
+      <div class="search"> <input type="text" class="search" id="input-search" placeholder="Search"> </div>
+      <ul class="search-results"></ul>
+      <div id="toc"> </div>
+      <ul class="toc-footer">
+        <li><a href='#'>Sign Up for a Developer Key</a></li>
+        <li><a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a></li>
+      </ul>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id="fusebox">Fusebox</h1>
+        <p>
+          <a href="https://travis-ci.org/fuse-box/fuse-box"><img src="https://travis-ci.org/fuse-box/fuse-box.svg?branch=master" alt="Build Status"></a>
+          <a href="https://gitter.im/fusebox-bundler/Lobby"><img src="https://img.shields.io/badge/gitter-join%20chat%20%E2%86%92-brightgreen.svg" alt="Fusebox-bundler"></a>
+        </p>
+        <p>
+          <a href="https://nodei.co/npm/fuse-box/"><img src="https://nodei.co/npm/fuse-box.png?downloads=true" alt="NPM"></a>
+        </p>
+        <p>FuseBox is a bundler/module loader that combines the power of webpack, JSPM and SystemJS. </p>
+        <p>It is blazing fast (it takes 50-100ms to re-bundle) which makes it extremely convenient for developers. It requires zero configuration to bundle such monsters like <code>babel-core</code>.</p>
+        <p>FuseBox loves <strong>typescript</strong>, and does not require any additional configuration. It will compile and bundle your code within a fraction of a second, yet offering a comprehensive loader API. </p>
+        <p>It is packed with features, and unfolds limitless possibilities of extending the API.</p>
+        <p>Join <a href="https://gitter.im/fusebox-bundler/Lobby">gitter channel</a>, we are active! / View on <a href="https://github.com/fuse-box/fuse-box">github</a> / Submit an <a href="https://github.com/fuse-box/fuse-box/issues/new">issue</a> / Contribute
+          to this <a href="https://github.com/fuse-box/fuse-box/tree/master/docs">documentation</a></p>
+        <h2 id="installation">Installation</h2> <pre class="highlight bash"><code>npm install fuse-box --save-dev</code></pre>
+        <p>FuseBox has many plugins in place to help you get started. All you need to do is install <code>fuse-box</code> from npm.</p>
+        <h2 id="sample-projects">Sample projects</h2>
+        <p>Learn how <a href="https://github.com/fuse-box/angular2-example">easy it</a> is to fuse angular with <code>less</code> in <strong>50ms</strong>!</p>
+        <p><a href="https://github.com/fuse-box/react-example">react-example</a> 50ms to fuse!</p>
+        <h1 id="why-">Why?</h1>
+        <h2 id="effortless-bundling">Effortless bundling</h2>
+        <p>You have an npm library in mind? You can bundle it without any extra configuration. babel-core with all plugins? No problem, fusebox will take care of everything you need.</p>
+        <p><strong>Typescript</strong>! Oh! We love typescript. You know what you need to do, to start transpiling and bundling typescript at the same time? <code>Change .js to .ts</code> <a href="https://github.com/fuse-box/angular2-example">Are you ready?</a>          </p>
+        <p>FuseBox will take care of <strong>ALL</strong> nodejs depedendencies. We offer a comprehensive list of nodejs modules for browser out of the box. No worries, no matter what are you trying to bundle. It will work. </p>
+        <p>There is nothing that cannot be fused. Create a 3 liner config and bundle some heavy project! Do conventional import statements, use shared bundles, hack API, create crazy plugins!</p>
+        <p>And bundle it fast. Jaw-dropping fast.</p>
+        <h2 id="speed">Speed</h2>
+        <p>It takes 50ms for a regular project, 100ms for a big project to re-bundle. It applies aggressive but responsible module caching, which makes it fly.</p>
+        <p>Check this <a href="https://github.com/fuse-box/benchmark">benchmark</a>:</p>
+        <p>1200 files to bundle</p>
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th style="text-align:center"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>FuseBox</td>
+              <td style="text-align:center">0.234s</td>
+            </tr>
+            <tr>
+              <td>Webpack</td>
+              <td style="text-align:center">1.376s</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>1000 files to bundle / 10 times</p>
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th style="text-align:center"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>FuseBox</td>
+              <td style="text-align:center">2.257s</td>
+            </tr>
+            <tr>
+              <td>Webpack</td>
+              <td style="text-align:center">13.591s</td>
+            </tr>
+          </tbody>
+        </table>
+        <h2 id="built-in-typescript-support-">Built-in typescript support.</h2>
+        <p>FuseBox is written in typescript, so I could not just proceed without a seamless typescript integration. In fact, you don&#39;t need to configure anything! Just point it to a typescript file, and FuseBox will do the rest.</p> <pre class="highlight js"><code>fuseBox.bundle(<span class="hljs-string">"&gt;index.ts"</span>);</code></pre>
+        <h2
+          id="comprehensive-loader-api">Comprehensive Loader API</h2>
+          <p>Whatever you tempted mind would want - you can get it all here. Apply hacks, intercept require statements, use an amazing dynamic module loading, and many many other neat features!</p>
+          <h2 id="extensive-plugins">Extensive plugins</h2>
+          <p>Have an idea in mind? Just develop a plugin, it&#39;s extremely easy to make one. Besides, we have <a href="#built-in-plugins">a few plugins</a>, that will help you get started. Want to develop one? Read up <a href="#plugin-api">here</a></p>
+          <h1 id="changelog">Changelog</h1>
+          <table>
+            <thead>
+              <tr>
+                <th>Version</th>
+                <th style="text-align:left">Changes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1.3.112</td>
+                <td style="text-align:left">Merged <a href="https://github.com/fuse-box/fuse-box/pull/147">PR 147</a> + Few non-significant tweaks</td>
+              </tr>
+              <tr>
+                <td>1.3.111</td>
+                <td style="text-align:left">Fixing <a href="http://fuse-box.org/#custom-modules-folder">modulesFolder</a> priority, Related <a href="https://github.com/fuse-box/fuse-box/issues/124">issue 124</a></td>
+              </tr>
+              <tr>
+                <td>1.3.110</td>
+                <td style="text-align:left">Automatic tsconfig.json lookup</td>
+              </tr>
+              <tr>
+                <td>1.3.109</td>
+                <td style="text-align:left">Clear Interval, avoiding frantic bundle call on fileChange</td>
+              </tr>
+              <tr>
+                <td>1.3.108</td>
+                <td style="text-align:left">Preventing babel-plugin from transpiling all npm deps. Issue <a href="https://github.com/fuse-box/fuse-box/issues/108">108</a></td>
+              </tr>
+              <tr>
+                <td>1.3.107</td>
+                <td style="text-align:left">Fixed broken tsConfig property</td>
+              </tr>
+              <tr>
+                <td>1.3.106</td>
+                <td style="text-align:left">Added file.properties to the API. Removed buffer</td>
+              </tr>
+              <tr>
+                <td>1.3.105</td>
+                <td style="text-align:left">Fixed errors related to Buffer. It is properly shimmed now, and fuse is serving a native &quot;buffer&quot; on server</td>
+              </tr>
+              <tr>
+                <td>1.3.104</td>
+                <td style="text-align:left">Fixed tsConfig property</td>
+              </tr>
+              <tr>
+                <td>1.3.103</td>
+                <td style="text-align:left">Added object-assign-polyfill to <code>process</code></td>
+              </tr>
+              <tr>
+                <td>1.3.102</td>
+                <td style="text-align:left">PR <a href="https://github.com/fuse-box/fuse-box/pull/101">101</a> merged </td>
+              </tr>
+              <tr>
+                <td>1.3.101</td>
+                <td style="text-align:left">Quick fix in the API</td>
+              </tr>
+              <tr>
+                <td>1.3.97-100</td>
+                <td style="text-align:left">Preparing test runner</td>
+              </tr>
+              <tr>
+                <td>1.3.96</td>
+                <td style="text-align:left">Many bundles at once</td>
+              </tr>
+              <tr>
+                <td>1.3.95</td>
+                <td style="text-align:left">SVG Support in CSSResourcePlugin</td>
+              </tr>
+              <tr>
+                <td>1.3.90-94</td>
+                <td style="text-align:left">Tweaking CSSResourcePlugin</td>
+              </tr>
+              <tr>
+                <td>1.3.85-90</td>
+                <td style="text-align:left">Plugins added <a href="http://fuse-box.org/#cssresourceplugin">CSSResourcePlugin</a> and <a href="http://fuse-box.org/#imagebase64plugin">ImageBase64Plugin</a></td>
+              </tr>
+              <tr>
+                <td>1.3.85</td>
+                <td style="text-align:left">Fixed caching (finally)</td>
+              </tr>
+              <tr>
+                <td>1.3.78</td>
+                <td style="text-align:left">Significant performance boost to the loader </td>
+              </tr>
+              <tr>
+                <td>1.3.77</td>
+                <td style="text-align:left">Improved dynamic modules</td>
+              </tr>
+              <tr>
+                <td>1.3.71-76</td>
+                <td style="text-align:left">Test suit runner</td>
+              </tr>
+              <tr>
+                <td>1.3.68 - 1.3.70</td>
+                <td style="text-align:left">Hot reload fixes, various tweaks</td>
+              </tr>
+              <tr>
+                <td>1.3.67</td>
+                <td style="text-align:left">Proper <a href="http://fuse-box.org/#shimming">shimming</a> </td>
+              </tr>
+              <tr>
+                <td>1.3.63-66</td>
+                <td style="text-align:left">devServer fixes</td>
+              </tr>
+              <tr>
+                <td>1.3.54-63</td>
+                <td style="text-align:left">Cache improvements and devServer tweaks</td>
+              </tr>
+              <tr>
+                <td>1.3.51-54</td>
+                <td style="text-align:left">Introducing devServer</td>
+              </tr>
+              <tr>
+                <td>1.3.50</td>
+                <td style="text-align:left">Fixed caching issue</td>
+              </tr>
+              <tr>
+                <td>1.3.49</td>
+                <td style="text-align:left">Added <a href="#envplugin">EnvPlugin</a></td>
+              </tr>
+              <tr>
+                <td>1.3.48</td>
+                <td style="text-align:left">Added <code>FuseBox.packages</code> to the client API</td>
+              </tr>
+              <tr>
+                <td>1.3.47</td>
+                <td style="text-align:left">Fixed a critical bug related to circual dep resolution on cache</td>
+              </tr>
+              <tr>
+                <td>1.3.45-46</td>
+                <td style="text-align:left">Added few missing nodejs libs</td>
+              </tr>
+              <tr>
+                <td>1.3.44</td>
+                <td style="text-align:left">Fixed an issue related to typescript helpers (typo)</td>
+              </tr>
+              <tr>
+                <td>1.3.43</td>
+                <td style="text-align:left">Fixed <a href="https://github.com/fuse-box/fuse-box/issues/75">75</a> Typescript helpers</td>
+              </tr>
+              <tr>
+                <td>1.3.42</td>
+                <td style="text-align:left">Fixed <a href="https://github.com/fuse-box/fuse-box/issues/67">#67</a> + 71 and some other small fixes</td>
+              </tr>
+              <tr>
+                <td>1.3.41</td>
+                <td style="text-align:left">Fixed a bug related to the ast traversing and babel. Added a new plugin api</td>
+              </tr>
+              <tr>
+                <td>1.3.40</td>
+                <td style="text-align:left">Fixing small bugs (uglify-js + peer deps)</td>
+              </tr>
+              <tr>
+                <td>1.3.39</td>
+                <td style="text-align:left">Added net, querystring and some other node modules</td>
+              </tr>
+              <tr>
+                <td>1.3.38</td>
+                <td style="text-align:left">Critical bug related to windows slashes</td>
+              </tr>
+              <tr>
+                <td>1.3.37</td>
+                <td style="text-align:left">Fixed <a href="https://github.com/fuse-box/fuse-box/issues/57">57</a></td>
+              </tr>
+              <tr>
+                <td>1.3.36</td>
+                <td style="text-align:left">Fixed #56, less and stylus emit sourcemaps</td>
+              </tr>
+              <tr>
+                <td>1.3.34-35</td>
+                <td style="text-align:left">TSX <a href="https://github.com/fuse-box/fuse-box/issues/46">issue</a> fixed</td>
+              </tr>
+              <tr>
+                <td>1.3.33</td>
+                <td style="text-align:left">Various fixes from PRs, few new plugins added</td>
+              </tr>
+              <tr>
+                <td>1.3.32</td>
+                <td style="text-align:left">Added <a href="#uglifyjsplugin">UglifyJsPlugin</a></td>
+              </tr>
+              <tr>
+                <td>1.3.28-31</td>
+                <td style="text-align:left">CSSPlugin supports sourcemaps and writing</td>
+              </tr>
+              <tr>
+                <td>1.3.27</td>
+                <td style="text-align:left">SassPlugin added (<strong>kai</strong>)</td>
+              </tr>
+              <tr>
+                <td>1.3.27</td>
+                <td style="text-align:left">Removed options from files (aaa.js?foo)</td>
+              </tr>
+              <tr>
+                <td>1.3.25</td>
+                <td style="text-align:left">Fixed a critical bug with native dependencies. Added RawPlugin + tests (thanks <strong>kai</strong>)</td>
+              </tr>
+              <tr>
+                <td>1.3.21 - 23</td>
+                <td style="text-align:left">Require options introduced. Added <a href="#stylusplugin">StylusPlugin</a>, Raw style options for CSSPlugin (big thanks to <em>kai</em> and <em>shepless</em>)</td>
+              </tr>
+              <tr>
+                <td>1.3.18 - 1.3.21</td>
+                <td style="text-align:left">PluginChains introduced! Added <a href="#postcssplugin">PostCSSPlugin</a> <a href="#lessplugin">LESSPlugin</a> (thanks shepless)</td>
+              </tr>
+              <tr>
+                <td>1.3.17</td>
+                <td style="text-align:left">Added <a href="#wildcard-import">wildcard import</a> support</td>
+              </tr>
+              <tr>
+                <td>1.3.16</td>
+                <td style="text-align:left">Prints a pretty stacktrace instead of unreadable acorn exceptions.</td>
+              </tr>
+            </tbody>
+          </table>
+          <h1 id="configuration">Configuration</h1>
+          <p>The concept of FuseBox is simple. Bundle anything for frontend and server without a headache. Simply put, you can copy paste a simple config down below and bundle some heavy module like <code>babel-core</code> or <code>babel-generator</code>.
+            But let&#39;s get started and break down all available options in fusebox.</p>
+          <blockquote>
+            <p>App Root Path: We resolve a few relative paths to <code>appRootPath</code> for your convinience. Generally its the folder containing <code>package.json</code>.</p>
+          </blockquote>
+          <h2 id="initialisation">Initialisation</h2>
+          <p>Initialise a fuse-box instance like so. Each instance will handle 1 bundle.</p> <pre class="highlight js"><code>FuseBox.init({ <span class="hljs-comment">/* you config is here */</span> })</code></pre>
+          <h2 id="home-directory">Home directory</h2>
+          <p>That&#39;s your source folder. It can be an absolute path, Or relative to <code>process.cwd()</code>.</p> <pre class="highlight js"><code>FuseBox.init({
+  <span class="hljs-attr">homeDir</span> : <span class="hljs-string">"./src"</span>
+})</code></pre>
+          <h2 id="out-file">Out file</h2>
+          <p>That&#39;s your bundle file. It can be an absolute path, Or relative to <code>appRootPath</code>.</p> <pre class="highlight js"><code>FuseBox.init({
+  <span class="hljs-attr">homeDir</span> : <span class="hljs-string">"./src"</span>,
+  <span class="hljs-attr">outFile</span> : <span class="hljs-string">"./build/bundle.js"</span>
+})</code></pre>
+          <h2 id="cache">Cache</h2>
+          <p>You can turn off caching if you like. By default caching is on. FuseBox will create a folder <code>.fuse-box</code> in your project path, and store related files. Don&#39;t forget to add it to .gitgnore.</p> <pre class="highlight js"><code>FuseBox.init({ 
+  <span class="hljs-attr">homeDir</span> : <span class="hljs-string">"./src"</span>,
+  <span class="hljs-attr">outFile</span> : <span class="hljs-string">"./build/bundle.js"</span>,
+  <span class="hljs-attr">cache</span> : <span class="hljs-literal">true</span>
+})</code></pre>
+          <h2 id="custom-modules-folder">Custom modules folder</h2>
+          <p>You probably would want to test a package some day, or just have an abstraction on top of your code. For that, you can use <code>modulesFolder</code> property. It behaves exactly the same like another npm module, just in a custom folder. </p>
+          <pre class="highlight undefined"><code><span class="hljs-selector-tag">FuseBox</span><span class="hljs-selector-class">.init</span>({
+    <span class="hljs-attribute">modulesFolder</span>: <span class="hljs-string">"src/modules"</span>
+})</code></pre>
+          <p>You local <code>npm</code> will have the highest priority. In essence, you can override fusebox&#39;s <a href="https://github.com/fuse-box/fuse-box/blob/master/assets/libs/path/index.js">path</a> of <a href="https://github.com/fuse-box/fuse-box/blob/master/assets/libs/fs/index.js">fs</a>            module if you like. Customize you packages in your own manner!</p>
+          <p>You don&#39;t need to create <code>package.json</code> - <code>index.js</code> will work just fine. It will be <a href="#cache">cached</a> like any other npm module with version <code>0.0.0</code>, so remember to toggle cache property in the
+            config</p>
+          <h2 id="package-name">Package name</h2>
+          <p>You default package name is <code>default</code>, You don&#39;t need to change it if you are not planning on having isolated bundles. Any bundle added as a script tag will share <code>default</code> package, keep that in mind. If you want to
+            release a package (say to npm), you probably would want set a different name (to avoid scope collision)</p>
+          <p>It&#39;s imperative having a <strong>unique name</strong> (matching an npm package) when publishing a bundle to NPM.</p> <pre class="highlight undefined"><code><span class="hljs-selector-tag">FuseBox</span><span class="hljs-selector-class">.init</span>({
+    <span class="hljs-attribute">package</span>: <span class="hljs-string">"mySuperLib"</span>
+})</code></pre>
+          <h2 id="global-variables">Global variables</h2>
+          <p>You can expose your package variables to <code>window</code> (in browser) and <code>exports</code>in node respectively. </p> <pre class="highlight undefined"><code><span class="hljs-selector-tag">FuseBox</span><span class="hljs-selector-class">.init</span>({
+    <span class="hljs-attribute">globals</span>: { default: <span class="hljs-string">"mySuperLib"</span> },
+})</code></pre>
+          <p>Whereas key is the name of a package and value is an alias that groups exports. &quot;default&quot; is your current project. Please, note, that in order to expose your default package, a bundle must have an <a href="#entry-point">entry point</a></p>
+          <h2 id="sourcemaps">Sourcemaps</h2>
+          <p>Sourcemaps in FuseBox are enabled by adding this property to a fusebox init configuration</p> <pre class="highlight js"><code>sourceMap: {
+  <span class="hljs-attr">bundleReference</span>: <span class="hljs-string">"sourcemaps.js.map"</span>,
+  <span class="hljs-attr">outFile</span>: <span class="hljs-string">"sourcemaps.js.map"</span>,
+}</code></pre>
+          <ul>
+            <li><code>bundleReference</code> speaks for itself. This line will be added to the bundle. For example <code>//# sourceMappingURL=./sourcemaps.js.map</code>. If your client is not able to read them, make sure that the path is reachable.</li>
+            <li><code>outFile</code> is where the sourcemap is written to disk. It can be an absolute path, Or relative to <code>appRootPath</code>.</li>
+          </ul>
+          <p>Sourcemaps currently work with <a href="#typescript">typescript</a> and <a href="#babel-plugin">BabelPlugin</a></p>
+          <h2 id="list-of-plugins">List of plugins</h2>
+          <p><code>plugins</code> option expects an array of plugins, See <a href="#plugin-api">Plugin API</a></p> <pre class="highlight undefined"><code><span class="hljs-selector-tag">FuseBox</span><span class="hljs-selector-class">.init</span>({
+    <span class="hljs-attribute">plugins</span>:[
+        build.<span class="hljs-built_in">TypeScriptHelpers</span>(),
+        build.<span class="hljs-built_in">JSONPlugin</span>(),
+        [build.<span class="hljs-built_in">LESSPlugin</span>(), build.<span class="hljs-built_in">CSSPlugin</span>()],
+    ]
+})</code></pre>
+          <h2 id="shimming">Shimming</h2>
+          <p>For those libraries that are bundled to work in <code>window</code> (jquery) for example, you need to provide a shimming configuration. FuseBox will not do analysis on that file, it will simply add it to the top of the bundle.</p> <pre class="highlight undefined"><code><span class="hljs-selector-tag">FuseBox</span><span class="hljs-selector-class">.init</span>({
+   <span class="hljs-attribute">shim</span>: {
+        <span class="hljs-attribute">jquery</span>: {
+            <span class="hljs-attribute">source</span>: <span class="hljs-string">"node_modules/jquery/dist/jquery.js"</span>,
+            <span class="hljs-attribute">exports</span>: <span class="hljs-string">"$"</span>
+        }
+   }
+});</code></pre>
+          <p>You can remove <code>source</code> option if you load a library using the script tag (for example from a CDN). After it has been shimmed, you can use FuseBox API, or import/require statement to obtain it.</p> <pre class="highlight undefined"><code><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> foo <span class="hljs-keyword">from</span> <span class="hljs-string">"jquery"</span>
+<span class="hljs-built_in">console</span>.log(foo)</code></pre>
+          <p>The key <code>jquery</code> in our case is used to define package name: for example, you can replace <code>jquery</code> with <code>foo</code> and use <code>import &quot;foo&quot;</code> to get a jquery instance.</p>
+          <p>If you are coming from <code>Webpack</code> this also could be used to behave like the Aliasing Feature in <code>Webpack</code>, so the equivalent of the below in <code>Webpack</code></p> <pre class="highlight undefined"><code>alias: { <span class="hljs-symbol">'react</span>-native': <span class="hljs-symbol">'react</span>-native-web' }</code></pre>
+          <p>would be</p> <pre class="highlight undefined"><code>shim : {
+   <span class="hljs-string">"react-native-web"</span> : { <span class="hljs-type">exports</span> : "<span class="hljs-type">require</span>(<span class="hljs-symbol">'react</span>-native')<span class="hljs-string">"}
+}</span></code></pre>
+          <p>Now you can reference it like <code>window.ReactNative</code>, and require function is at your convenience.</p>
+          <h1 id="bundle">Bundle</h1>
+          <h2 id="arithmetic-instructions">Arithmetic instructions</h2>
+          <p>FuseBox uses an arithmetic approach to bundling. We don&#39;t support anything else, as this approach is the most simple and flexible.</p> <pre class="highlight js"><code><span class="hljs-keyword">let</span> fuse = FuseBox.init({
+    <span class="hljs-attr">homeDir</span>: <span class="hljs-string">"src/"</span>,
+    <span class="hljs-attr">globals</span>: { <span class="hljs-attr">default</span>: <span class="hljs-string">"myLib"</span>},
+    <span class="hljs-attr">outFile</span>: <span class="hljs-string">"./out.js"</span>
+});
+
+fuse.bundle(<span class="hljs-string">"&gt;index.js"</span>);</code></pre>
+          <ul>
+            <li>If you want a bundle to be executed on load, add <code>&gt;</code> in front of your entry file. In case your bundle serves as an individual library, you would not want to make an automatic execution.</li>
+            <li>Make sure to keep the extension as you can point to a typescript file. </li>
+            <li>All <em>inputs</em> are relative to <code>homeDir</code></li>
+          </ul>
+          <p>With arithmetic instructions, you can explicitly define which files go to the bundle, which files skip external dependencies e.g.</p> <pre class="highlight js"><code>fuseBox.bundle(<span class="hljs-string">"&gt;index.ts [lib/**/*.ts]"</span>);</code></pre>
+          <p>In this case, you will get everything that is required in the index, as well as everything that lies under <code>lib/</code> folder with one condition - any external libraries will be ignored. </p>
+          <h3 id="examples-for-better-understanding">Examples for better understanding</h3>
+          <p><code>&gt; index.js [**/*.js]</code> - Bundle everything without dependencies, and execute <code>index.js</code></p>
+          <p><code>[lib/*.js] +path +fs</code> - Bundle all files in lib folder, ignore node modules except for <code>path</code> and <code>fs</code></p>
+          <p><code>[**/*.js]</code> - Bundle everything without dependencies</p>
+          <p><code>**/*.js</code> - Bundle everything with dependencies</p>
+          <p><code>**/*.js -path</code> - Bundle everything with dependencies except for module <code>path</code></p>
+          <h2 id="making-many-bundles-at-once">Making many bundles at once</h2>
+          <p>You can specify many <code>{ outFile : bundleStr }</code>. Your config (excluding <code>outFile</code>) will be copied for every single process.</p>
+          <p>For example:</p> <pre class="highlight js"><code>fuseBox.bundle({
+    <span class="hljs-string">"_build/test_vendor.js"</span>: <span class="hljs-string">"+path"</span>,
+    <span class="hljs-string">"_build/app.js"</span>: <span class="hljs-string">"&gt;[index.ts]"</span>
+});</code></pre>
+          <h2 id="bundle-in-a-bundle">Bundle in a bundle</h2>
+          <p>Super powers of FuseBox allow doing that without code redundancy. An API of a second bundle will be removed, and 2 bundles will be fused together, keeping only one shared Fusebox API.</p>
+          <p>Only one thing you need to consider before that - packaging.</p>
+          <p>Your current project is called &quot;default&quot; This is by design. All dynamic modules will register themselves into it automatically. </p>
+          <p>If you want to require a bundle it must have a different namespace. Unless you want to keep it shared. Read up on <a href="#package-name">package naming</a> for better understanding</p>
+          <p>Bundle your first package, then make sure you master bundle does not have the same name (otherwise they will share filename scopes) and require it like any other file</p> <pre class="highlight js"><code><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> myLib <span class="hljs-keyword">from</span> <span class="hljs-string">"./bundles/myLib.js"</span></code></pre>
+          <p>FuseBox sniffs its own creations and restructures the code accordingly.</p>
+          <h1 id="typescript">Typescript</h1>
+          <p>Typescript works out of the box, additional configuration is not required. Make sure you have the typescript compiler installed.</p> <pre class="highlight bash"><code>npm install typescript --save-dev</code></pre>
+          <p>Now let&#39;s define a simple configuration</p> <pre class="highlight js"><code>FuseBox.init({
+    <span class="hljs-attr">homeDir</span>: <span class="hljs-string">"src/"</span>,
+    <span class="hljs-attr">sourceMap</span>: {
+         <span class="hljs-attr">bundleReference</span>: <span class="hljs-string">"./sourcemaps.js.map"</span>,
+         <span class="hljs-attr">outFile</span>: <span class="hljs-string">"sourcemaps.js.map"</span>,
+    },
+    <span class="hljs-attr">outFile</span>: <span class="hljs-string">"./out.js"</span>
+}).bundle(<span class="hljs-string">"&gt;index.ts"</span>);</code></pre>
+          <p>FuseBox automatically switches to typescript mode by detecting the extension <code>.ts</code> / <code>.tsx</code>. FuseBox compiles and bundles your files.</p>
+          <blockquote>
+            <p>For your own convenience you can also add the <a href="#typescript-helpers">Typescript helpers plugin</a>.</p>
+          </blockquote>
+          <h2 id="tsconfig">tsConfig</h2>
+          <p>FuseBox comes with default ts options. <code>tsconfig.json</code> will be picked up automatically. Alternatively you can use the tsconfig option to customize the path to tsconfig.json (It can be an absolute path, Or relative to <code>appRootPath</code>).</p>
+          <pre class="highlight js"><code>FuseBox.init({
+    <span class="hljs-attr">tsConfig</span> : <span class="hljs-string">"tsconfig.json"</span>
+})</code></pre>
+          <ul>
+            <li>We automatically set the <code>module</code> to <code>commonjs</code>.</li>
+            <li>If you set <code>sourceMap</code> in your <code>FuseBox</code> options, we automatically setup the sourcemap settings for TypeScript <code>compilerOptions</code>.</li>
+          </ul>
+          <h1 id="loader-api">Loader API</h1>
+          <h2 id="how-it-works">How it works</h2>
+          <p>Well, it&#39;s pure magic - nodejs wrapper for browser. FuseBox wrapper provides 100% compatible nodejs ecosystem, having <code>virtual files</code> and <code>virtual packages</code>. Everything is registered and shared by the API. It means,
+            that you can have two script tags that will fuse and merge each other.</p>
+          <p>Plugins inject dependent packages/javascript code, that becomes a part of FuseBox loader. In principal, a plugin might work at build time and runtime, which unfolds some crazy optimisation possibilities. </p>
+          <p>FuseBox bundle works in both environments. Essentially, it does not matter where you run it. FuseBox will persist itself in browser window, or nodejs globals.</p>
+          <p>Every bundle contains a 3.7k footer with FuseBox API (1,6KB gzipped). </p>
+          <h2 id="import">Import</h2>
+          <p>Import is 100% compatible with commonjs specification. You can require folders, skip file extensions (fusebox will guess it).</p> <pre class="highlight js"><code>FuseBox.import(<span class="hljs-string">"./foo/bar"</span>);</code></pre>
+          <p>Require external packages will work as well</p> <pre class="highlight js"><code>FuseBox.import(<span class="hljs-string">"fs"</span>);</code></pre>
+          <p>Please note that some libraries like &quot;fs&quot; are faked in the browser. Meaning that it won&#39;t spit out an error, but won&#39;t work as expected on the server for known reasons. Nodejs environment, however, will get authentic &quot;fs&quot;
+            module. (Concerns http, net, tty e.t.c )</p>
+          <h2 id="lazy-load">Lazy Load</h2>
+          <p>Lazy load works out of the box.</p>
+          <p>Imagine that bundle does not have <code>myModule.js</code>, and it&#39;s a <code>CommonJs</code> module. In order to lazy load it, put your target file next to it available via HTTP, and load it like so:</p> <pre class="highlight undefined"><code>FuseBox.<span class="hljs-keyword">import</span>(<span class="hljs-string">"./myModule.js"</span>, <span class="hljs-function"><span class="hljs-params">(<span class="hljs-built_in">module</span>)</span> =&gt;</span> {
+})</code></pre>
+          <p>If a module is not found within FuseBox&#39; context, it tries to load it via HTTP request. Once obtained, the API caches the exports, allowing to request that module synchronously later on.</p> <pre class="highlight undefined"><code><span class="hljs-keyword">import</span> <span class="hljs-string">"./myModule"</span>.</code></pre>
+          <p>You can load other bundles as well. For example <a href="#bundle-in-a-bundle">here</a> </p>
+          <h2 id="wildcard-import">Wildcard import</h2>
+          <p>With wildcard imports <code>*</code> you can require all files that match a particular pattern. A wildcard with no default extension will fallback to <code>.js</code>. For example</p> <pre class="highlight js"><code>FuseBox.import(<span class="hljs-string">"./batch/*"</span>)</code></pre>
+          <p>Will result in:</p> <pre class="highlight js"><code>{ <span class="hljs-string">"batch/a.js"</span> : {}, <span class="hljs-string">"batch/b.js"</span> : {} }</code></pre>
+          <p>Whereas <code>a.js</code> and <code>b.js</code> are files in folder <code>batch</code></p>
+          <p>You can require all JSON files for example:</p> <pre class="highlight js"><code>FuseBox.import(<span class="hljs-string">"./batch/*.json"</span>)</code></pre>
+          <p>Or match a particular pattern</p> <pre class="highlight js"><code>FuseBox.import(<span class="hljs-string">"./batch/*-component"</span>)</code></pre>
+          <p>Note that you can use all of the above with <code>require</code> statement too.</p> <pre class="highlight undefined"><code><span class="hljs-function"><span class="hljs-title">require</span><span class="hljs-params">(<span class="hljs-string">"~/stuff/boo"</span>)</span></span>.hello</code></pre>
+          <p>or</p> <pre class="highlight undefined"><code><span class="hljs-function"><span class="hljs-title">require</span><span class="hljs-params">(<span class="hljs-string">"~/stuff/boo.js"</span>)</span></span>.hello</code></pre>
+          <h2 id="remove">Remove</h2>
+          <p>You can completely remove a module from memory. </p> <pre class="highlight undefined"><code>FuseBox.<span class="hljs-built_in">remove</span>(<span class="hljs-string">"./foo"</span>)</code></pre>
+          <h2 id="fusebox-events">FuseBox events</h2>
+          <p>It is possible to intercept require statements. You can catch &quot;before-import&quot; and &quot;after-import&quot; events like so:</p> <pre class="highlight undefined"><code>FuseBox.<span class="hljs-literal">on</span>(<span class="hljs-string">"before-import"</span>, <span class="hljs-function"><span class="hljs-params">(exports, <span class="hljs-built_in">require</span>, <span class="hljs-built_in">module</span>, __filename, __dirname, pkg)</span> =&gt;</span> {                
+});
+
+FuseBox.<span class="hljs-literal">on</span>(<span class="hljs-string">"after-import"</span>, <span class="hljs-function"><span class="hljs-params">(exports, <span class="hljs-built_in">require</span>, <span class="hljs-built_in">module</span>, __filename, __dirname, pkg)</span> =&gt;</span> {                
+});</code></pre>
+          <p>However, it is not recommended. But if you want to play god, you can use that functionality.</p>
+          <h2 id="dynamic-modules">Dynamic modules</h2>
+          <p>Another feature that allows you to register <code>commonjs</code> modules at runtime in browser and on server accordingly</p> <pre class="highlight js"><code>FuseBox.dynamic(<span class="hljs-string">"foo/bar.js"</span>, <span class="hljs-string">"module.exports = {foo : 'bar'}"</span>)</code></pre>
+          <p>Note how <code>foo/bar.js</code> is set. It&#39;s called &quot;FuseBox path&quot;, which should not start with slashes or periods. FuseBox will register a file in the <code>default</code>project. Hence, it is possible to override your local
+            files, but impossible to do the same with external packages. </p>
+          <p>It&#39;s imperative to bear in mind <strong>file&#39;s path</strong> as well. Having <code>foo/bar.js</code> as a dynamic module, means that its <code>require</code> context will be pointed to the folder <code>foo</code> To make it clear, let&#39;s
+            register two files</p> <pre class="highlight js"><code>FuseBox.dynamic(<span class="hljs-string">"foo/bar.js"</span>, <span class="hljs-string">"module.exports = {foo : 'bar'}"</span>)
+FuseBox.dynamic(<span class="hljs-string">"foo/wow.js"</span>, <span class="hljs-string">"require('./bar')"</span>)</code></pre>
+          <p>See how <code>wow.js</code> is referring to the <code>foo/bar.js</code>. A dynamic module is a fully functional FuseBox file, that plays nicely with the rest of the bundle and vice versa. Your bundle won&#39;t have any problems using a wildcard
+            import on the dynamic modules too.</p> <pre class="highlight undefined"><code><span class="hljs-function"><span class="hljs-title">require</span><span class="hljs-params">(<span class="hljs-string">"~/foo/*"</span>)</span></span> <span class="hljs-comment">// will give 2 files</span></code></pre>
+          <p>It&#39;s impossible to transpile dynamic modules at the moment. You can easily do it yourself, since the API accepts a string, </p>
+          <h2 id="point-to-the-root">Point to the root</h2>
+          <p>You can use <code>~</code> symbol to point to your project&#39;s path in order to solve <code>../../../../../utils</code> mess.</p> <pre class="highlight js"><code><span class="hljs-comment">// es5</span>
+<span class="hljs-built_in">require</span>(<span class="hljs-string">"~/lib/utils"</span>)
+<span class="hljs-comment">// es6</span>
+<span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> utils <span class="hljs-keyword">from</span> <span class="hljs-string">"~/lib/utils"</span>;</code></pre>
+          <h1 id="plugin-api">Plugin API</h1>
+          <p>Plugin API has a very powerful mechanism of manipulating the output.</p>
+          <p>Let&#39;s take a look a plugin&#39;s interface first</p> <pre class="highlight typescript"><code><span class="hljs-keyword">interface</span> Plugin {
+    test?: <span class="hljs-built_in">RegExp</span>;
+    dependencies?: <span class="hljs-built_in">string</span>[];
+    init: { (context: WorkFlowContext) };
+    transform: { (file: File) };
+    bundleStart?(context: WorkFlowContext);
+    bundleEnd?(context: WorkFlowContext);
+}</code></pre>
+          <h2 id="spec">Spec</h2>
+          <h3 id="test-regexp-">test [RegExp]</h3>
+          <p>Defining <code>test</code> will filter files into your plugin. For example <code>\.js$</code> If spefified you plugin&#39;s <code>transform</code> will get triggered upon tranformation. It&#39;s optional.</p>
+          <h3 id="dependencies">dependencies</h3>
+          <p><code>dependencies</code> a list of npm dependencies your plugin might require. For example <a href="https://github.com/fuse-box/fuse-box/blob/master/src/plugins/CSSplugin.ts#L23">this case</a></p>
+          <h3 id="init">init</h3>
+          <p>Happens when a plugin is initilized. Good places, to reset your states.</p>
+          <h3 id="transform">transform</h3>
+          <p><code>transform</code> if your plugin has a <code>test</code> property, fusebox will trigger tranform method sending <a href="https://github.com/fuse-box/fuse-box/blob/master/src/File.ts">file</a> as a first argument.</p>
+          <h3 id="bundlestart">bundleStart</h3>
+          <p>Happens on bundle start. A good place to inject your custom code here. For example <a href="https://github.com/fuse-box/fuse-box/blob/master/src/plugins/CSSplugin.ts#L50">here</a></p>
+          <h3 id="bundleend">bundleEnd</h3>
+          <p>All files are bundled.</p>
+          <p>Please be patient! <strong>Documentation is in progress</strong>. </p>
+          <h2 id="alternative-content">Alternative content</h2>
+          <p>If for some reason we want to preserve file contents for a later reuse and override the output, we can use <code>file.alternativeContent</code> which affects directly bundling process over <a href="https://github.com/fuse-box/fuse-box/blob/96b646a632f886f296a533ccf4c45f436cf443f3/src/BundleSource.ts#L133">here</a></p>
+          <p>It can be use for the <a href="#concat-files">concat</a> technique for example</p>
+          <h2 id="concat-files">Concat files</h2>
+          <p>It is possible to concat files into one using the plugin API. There is <a href="https://github.com/fuse-box/fuse-box/blob/master/src/plugins/ConcatPlugin.ts#L51">ConcatPlugin</a> which serves as an example for the subject. </p>
+          <p>In order to understand how it works imagine a plugin chain:</p> <pre class="highlight js"><code>[<span class="hljs-regexp">/\.txt$/</span>, fsbx.ConcatPlugin({ <span class="hljs-attr">ext</span>: <span class="hljs-string">".txt"</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">"textBundle.txt"</span> })],</code></pre>
+          <p>We have 2 files, <code>a.txt</code> and <code>b.txt</code> which are captured by the plugin API, and each of them is redirected to the ConcatPlugin&#39;s transform, which looks like this:</p> <pre class="highlight js"><code>public transform(file: File) {
+    <span class="hljs-comment">// Loading the contents of file a.txt or b.txt</span>
+    file.loadContents();
+
+    <span class="hljs-keyword">let</span> context = file.context;
+
+    <span class="hljs-comment">// create a file group in the context with name which is set in the plugin configuration</span>
+    <span class="hljs-comment">// let's say "txtBundle.txt"</span>
+    <span class="hljs-keyword">let</span> fileGroup = context.getFileGroup(<span class="hljs-keyword">this</span>.bundleName);
+    <span class="hljs-keyword">if</span> (!fileGroup) {
+        fileGroup = context.createFileGroup(<span class="hljs-keyword">this</span>.bundleName);
+    }
+    <span class="hljs-comment">// Adding current file (say a.txt) as a subFile </span>
+    fileGroup.addSubFile(file);
+
+    <span class="hljs-comment">// making sure the current file refers to an object at runtime that calls our bundle</span>
+    file.alternativeContent = <span class="hljs-string">`module.exports = require("./<span class="hljs-subst">${<span class="hljs-keyword">this</span>.bundleName}</span>")`</span>;
+}</code></pre>
+          <p>When we register a new file group <code>context.createFileGroup(&quot;txtBundle.txt&quot;)</code> FuseBox creates a <strong>fake</strong> or a virtual file which is added to the dependency tree. This file has a special mode, called <code>groupMode</code>.</p>
+          <p>We need to alter the output as well using <a href="#alternative-content">alternative content</a>. Original contents will be ignored by the Source bundler.</p>
+          <p>After FuseBox has bundled all files related to your current project, it checks for groups over <a href="https://github.com/fuse-box/fuse-box/blob/master/src/ModuleCollection.ts#L260">here</a>, iterates and executes plugins. Then each plugin
+            is tested accordingly (now our file name is called <code>txtBundle.txt</code> with <code>.txt</code> extension) and executes <code>transformGroup</code> of a plugin if set.</p>
+          <p>You should understand that <code>txtBundle.txt</code> behaves like any other file, with one exception - it does not call <code>transform</code> but <code>tranformGroup</code> instead.</p> <pre class="highlight js"><code>public transformGroup(group: File) {
+    <span class="hljs-keyword">let</span> contents = [];
+    group.subFiles.forEach(<span class="hljs-function"><span class="hljs-params">file</span> =&gt;</span> {
+        contents.push(file.contents);
+    });
+    <span class="hljs-keyword">let</span> text = contents.join(<span class="hljs-keyword">this</span>.delimiter);
+    group.contents = <span class="hljs-string">`module.exports = <span class="hljs-subst">${<span class="hljs-built_in">JSON</span>.stringify(text)}</span>`</span>;
+}</code></pre>
+          <p>Now our bundle has a virtual file which looks like this:</p> <pre class="highlight js"><code>___scope___.file(<span class="hljs-string">"textBundle.txt"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">exports, require, module, __filename, __dirname</span>)</span>{ 
+    <span class="hljs-built_in">module</span>.exports = <span class="hljs-string">"hello\nworld"</span>
+});</code></pre>
+          <h1 id="dev-server-and-hmr">Dev Server and HMR</h1>
+          <p>To run a development server all you need is to change <code>bundle</code> to <code>devServer</code></p>
+          <h2 id="launch-express-and-socket">Launch express and socket</h2> <pre class="highlight js"><code>FuseBox.init({
+    <span class="hljs-attr">homeDir</span>: <span class="hljs-string">"src"</span>,
+    <span class="hljs-attr">outFile</span>: <span class="hljs-string">"build/out.js"</span>,
+}).devServer(<span class="hljs-string">"&gt;index.ts"</span>);</code></pre>
+          <p>the <code>devServer</code> function takes an <em>optional</em> options parameter as a second argument.</p>
+          <h3 id="changing-the-the-served-folder">Changing the the served folder</h3>
+          <p>FuseBox will automatically serve your <code>build</code> folder e.g. with <code>outFile : &quot;build/out.js&quot;</code> it will serve the folder <code>build/</code>.</p>
+          <p>You can change it by passing in a string value to the <code>root</code> option (It can be an absolute path, Or relative to <code>appRootPath</code>): </p> <pre class="highlight js"><code>devServer(<span class="hljs-string">"&gt;index.ts"</span>, {
+   <span class="hljs-attr">root</span>: <span class="hljs-string">'public/build'</span>
+});</code></pre>
+          <h3 id="changing-the-port">Changing the port</h3>
+          <p>By default you will get <code>express</code> application running and a <code>socket</code> server bound to port <code>4444</code>. To change the port provide <code>port</code> option.</p> <pre class="highlight js"><code>devServer(<span class="hljs-string">"&gt;index.ts"</span>, {
+   <span class="hljs-attr">port</span>: <span class="hljs-number">8081</span>
+});</code></pre>
+          <h2 id="express-api">Express api</h2>
+          <p>Access express application like so:</p> <pre class="highlight js"><code><span class="hljs-keyword">const</span> self = devServer(<span class="hljs-string">"&gt;index.ts"</span>, {
+   <span class="hljs-attr">port</span>: <span class="hljs-number">8081</span>
+});
+self.httpServer.app.use(<span class="hljs-comment">/* your middleware */</span>);</code></pre>
+          <p>You can set <code>root</code> to false if you want to manually configure the root path</p> <pre class="highlight js"><code><span class="hljs-keyword">const</span> self = devServer(<span class="hljs-string">"&gt;index.ts"</span>, {
+   <span class="hljs-attr">port</span>: <span class="hljs-number">8081</span>,
+   <span class="hljs-attr">root</span>: <span class="hljs-literal">false</span>
+});
+self.httpServer.serveStatic(<span class="hljs-string">"*"</span>, <span class="hljs-string">"build/static"</span>);</code></pre>
+          <p><code>serveStatic</code> is convenience method, that looks like this:</p> <pre class="highlight js"><code><span class="hljs-keyword">this</span>.app.use(userPath, express.static(ensureUserPath(userFolder)));</code></pre>
+          <h2 id="custom-emitter">Custom emitter</h2>
+          <p>You can manually sent events on file change like so:</p> <pre class="highlight js"><code>fuseBox.devServer(<span class="hljs-string">"&gt;index.ts"</span>, {
+    <span class="hljs-attr">emitter</span>: <span class="hljs-function">(<span class="hljs-params">self, fileInfo</span>) =&gt;</span> {
+        self.socketServer.send(<span class="hljs-string">"source-changed"</span>, fileInfo);
+    }
+});</code></pre>
+          <h2 id="integrate-with-existing-app">Integrate with existing app</h2>
+          <p>If you have an existing http application (java, python, nodejs - it does not matter), you can easiliy intergate fusebox with it.</p> <pre class="highlight js"><code>fuse.devServer(<span class="hljs-string">"&gt;app.tsx"</span>, {
+    <span class="hljs-attr">port</span>: <span class="hljs-number">8080</span>, 
+    <span class="hljs-attr">httpServer</span>: <span class="hljs-literal">false</span>
+});</code></pre>
+          <p>In this configuration <code>port: 8080</code> corresponds to a socket server port, having <code>httpServer:false</code> makes it work only in <code>socket</code> mode. Once you page it loaded, <code>FuseBox API</code> will try to connect to
+            <code>:8080</code> port an start listening to events.</p>
+          <h1 id="tips">Tips</h1>
+          <p>Below are some tips that will improve your experience and help you avoiding gotchas while using <strong>FuseBox</strong>.</p>
+          <h2 id="general-tips">General tips</h2>
+          <ul>
+            <li>Don&#39;t import <strong>FuseBox</strong> in your code, it will cause issues, it is already added to your bundle and available globally and you can access it anywhere in your code like when you access <code>window</code> on client or <code>global</code>              in <code>Node.js</code>. for example to import a file just use <code>FuseBox.import(&#39;./myfile&#39;)</code></li>
+            <li>Use the <a href="#envplugin">EnvPlugin</a> to pass Environmental variables on both client and server, you can even use packages like <a href="https://www.npmjs.com/package/safe-env">safe-env</a> with it.</li>
+            <li><strong>FuseBox</strong> <code>API</code> has neat <code>isServer</code> and <code>isBrowser</code> methods, use them to check the environment the code is running in. for example <code>FuseBox.isServer</code> will return <code>true</code>              if you are running your code in <code>Node.js</code></li>
+          </ul>
+          <h2 id="typescript-tips">TypeScript tips</h2>
+          <ul>
+            <li>You don&#39;t have to worry about <code>module</code> option in <strong>TypeScript</strong> compiler options, Fuse will automatically set it up for you, even if you forget to add it.</li>
+          </ul>
+          <h1 id="built-in-plugins">Built-in plugins</h1>
+          <p>Fusebox contains premade plugins, that should help you to get started. </p>
+          <h2 id="css-plugin">CSS Plugin</h2>
+          <p>It&#39;s very easy to start working with css files. You have 2 options, you either bundle the contents or serve the files. A decision that can be made at build time.</p>
+          <p>For example:</p> <pre class="highlight js"><code>plugins: [
+    fsbx.CSSPlugin({
+        <span class="hljs-attr">minify</span>: <span class="hljs-literal">true</span>
+    })
+]</code></pre>
+          <p>In this case, all CSS files will be bundled.</p>
+          <h3 id="write-contents-to-a-different-file">Write contents to a different file</h3>
+          <p>Combine this module with something else, and you will see real magic happen.</p> <pre class="highlight undefined"><code><span class="hljs-string">plugins:</span> [
+    [
+        fsbx.SassPlugin({ <span class="hljs-string">outputStyle:</span> <span class="hljs-string">'compressed'</span> }),
+        fsbx.CSSPlugin({ <span class="hljs-string">write:</span> <span class="hljs-literal">true</span> })
+    ]
+]</code></pre>
+          <ul>
+            <li>It will create an according file - <code>./main.scss</code> becomes <code>build/main.css</code> (your <a href="#out-file">outFile</a> folder + project path) </li>
+            <li>Will create <code>main.css.map</code> and it will do mappping too, ff sourcemaps are attached</li>
+            <li>It will automatically append filename to the head (and serve it)</li>
+          </ul>
+          <p>Check how it works <a href="https://github.com/fuse-box/angular2-example">here</a></p>
+          <blockquote>
+            <p>Note - we are still working on the CSS plugins. Be patient. Customisations are coming soon.</p>
+          </blockquote>
+          <h3 id="serving-file">Serving file</h3>
+          <p>But if you define &quot;serve&quot; option with a callback, all files will be filtered through it. A callback is expected to return a string with a browser path. If you return &quot;undefined&quot; or <em>NOT</em> a string, that file will be
+            bundled as if no option was specified.</p>
+          <p>All css files will be served by server.</p> <pre class="highlight js"><code>plugins: [
+    fsbx.CSSPlugin({
+        <span class="hljs-attr">minify</span>: <span class="hljs-literal">true</span>,
+        <span class="hljs-attr">serve</span>: <span class="hljs-function"><span class="hljs-params">path</span> =&gt;</span> <span class="hljs-string">`./<span class="hljs-subst">${path}</span>`</span>
+    })
+]</code></pre>
+          <p>All files will be served except for &quot;styles.css&quot; (contents will be included in the bundle)</p> <pre class="highlight undefined"><code><span class="hljs-attribute">plugins</span>: [
+    fsbx.CSSPlugin({
+        <span class="hljs-attribute">minify</span>: true,
+        <span class="hljs-attribute">serve</span>: path =&gt; path === "styles.css<span class="hljs-built_in">` ? 0 : ./${path}`</span>
+    })
+]</code></pre>
+          <p>On top of that a CSS file will added to DOM upon request if not found in the bundle.</p>
+          <h2 id="cssresourceplugin">CSSResourcePlugin</h2>
+          <p>Imagine a situation where you import a css file from an npm library. Let&#39;s try make <a href="https://github.com/vakata/jstree">jstree</a> library work</p> <pre class="highlight undefined"><code><span class="hljs-keyword">import</span> <span class="hljs-string">"jstree/dist/jstree.js"</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-string">"jstree/dist/themes/default/style.css"</span>;</code></pre>
+          <p><code>style.css</code> has relative resources (images, fonts), which obviously need to be copied. CSSResourcePlugin comes real handy. It re-writes URL and copies files to a destination specified by user,</p>
+          <h3 id="copy-files">Copy files</h3> <pre class="highlight undefined"><code>plugins : [
+   [<span class="hljs-regexp">/node_modules.*\.css$/</span>, 
+      build.CSSResourcePlugin({
+          dist : <span class="hljs-string">"build/resources"</span>,
+          resolve : <span class="hljs-function"><span class="hljs-params">(f)</span> =&gt;</span> `<span class="javascript">/resources/${f}</span>`
+      }), build.CSSPlugin()]
+]</code></pre>
+          <p><code>resolve</code> in our case is the actual path on browser. <code>f</code> is a modified file name (you don&#39;t need to change it)</p>
+          <h3 id="inline">Inline</h3>
+          <p>You can inline images as well</p> <pre class="highlight undefined"><code><span class="hljs-string">plugins :</span> [
+   [<span class="hljs-regexp">/node_modules.*\.css$/</span>, 
+      build.CSSResourcePlugin({
+            <span class="hljs-string">inline :</span> <span class="hljs-literal">true</span>
+      }), build.CSSPlugin()]
+]</code></pre>
+          <blockquote>
+            <p>HINT: disable cache while playing with the options, as npm modules along with css files are heavily cached</p>
+          </blockquote>
+          <h2 id="less-plugin">Less Plugin</h2>
+          <p>Install less first.</p> <pre class="highlight bash"><code>npm install less --save-dev</code></pre>
+          <p>Less plugin should be chained along the with the CSSPlugin</p> <pre class="highlight js"><code>plugins:[
+  [fsbx.LESSPlugin(), fsbx.CSSPlugin()]
+],</code></pre>
+          <blockquote>
+            <p>We still need to figure out what to do with sourcemaps. Be patient!</p>
+          </blockquote>
+          <h2 id="postcssplugin">PostCSSPlugin</h2>
+          <p>Install libraries first</p> <pre class="highlight bash"><code>npm install precss postcss --save-dev</code></pre>
+          <p>PostCSS should be chained along the with the CSSPlugin</p> <pre class="highlight js"><code><span class="hljs-keyword">const</span> precss = <span class="hljs-built_in">require</span>(<span class="hljs-string">"precss"</span>);
+<span class="hljs-keyword">const</span> POST_CSS_PLUGINS = [precss()];
+
+
+plugins:[
+  [fsbx.PostCSSPlugin(POST_CSS_PLUGINS), fsbx.CSSPlugin()],
+],</code></pre>
+          <blockquote>
+            <p>We still need to figure out what to do with sourcemaps. Be patient!</p>
+          </blockquote>
+          <h2 id="stylusplugin">StylusPlugin</h2> <pre class="highlight js"><code>plugins:[
+  [fsbx.StylusPlugin(), fsbx.CSSPlugin()]
+],</code></pre>
+          <h2 id="raw-plugin">Raw Plugin</h2>
+          <p>Make files export text data</p> <pre class="highlight js"><code>plugins:[
+ [<span class="hljs-regexp">/\.raw$/</span>, RawPlugin({<span class="hljs-attr">extensions</span>: [<span class="hljs-string">'.raw'</span>]})]
+],</code></pre>
+          <h2 id="sassplugin">SassPlugin</h2> <pre class="highlight bash"><code>npm install node-sass</code></pre>
+          <p>Usage:</p> <pre class="highlight js"><code>plugins:[
+  [fsbx.SassPlugin({ <span class="hljs-comment">/* options */</span> })]
+],</code></pre>
+          <h2 id="html-plugin">HTML Plugin</h2> <pre class="highlight js"><code>plugins: [
+  fsbx.HTMLPlugin({ <span class="hljs-attr">useDefault</span>: <span class="hljs-literal">false</span> })
+]</code></pre>
+          <p>Toggle <code>useDefault</code> to make HTML files export strings as <code>default</code> property. For example with <code>useDefault: true</code> you will be able to import HTML files like so :</p> <pre class="highlight js"><code><span class="hljs-keyword">import</span> tpl <span class="hljs-keyword">from</span> <span class="hljs-string">"~/views/file.html"</span></code></pre>
+          <h2
+            id="imagebase64plugin">ImageBase64Plugin</h2>
+            <p>Works greatly if you want to have images bundled</p> <pre class="highlight bash"><code>npm install base64-img --save-dev</code></pre><pre class="highlight undefined"><code><span class="hljs-attribute">plugins</span>:<span class="hljs-meta"> [
+    fsbx.ImageBase64Plugin()
+]</span></code></pre>
+            <p>Example for react</p> <pre class="highlight jsx"><code><span class="hljs-keyword">const</span> image = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./icons/image.png"</span>)
+&lt;img src={image} /&gt;</code></pre>
+            <h2 id="babel-plugin">Babel plugin</h2>
+            <p>You can use babel plugin to transpile your code. Make sure you have <code>babel-core</code> installed</p> <pre class="highlight bash"><code>npm install babel-core babel-preset-es2015 babel-plugin-transform-react-jsx</code></pre>
+            <p>For example. to transpile JSX, you can use this configuration. </p> <pre class="highlight js"><code> plugins: [
+    fsbx.BabelPlugin({
+        <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.jsx$/</span>, <span class="hljs-comment">// test is optional</span>
+        config: {
+            <span class="hljs-attr">sourceMaps</span>: <span class="hljs-literal">true</span>,
+            <span class="hljs-attr">presets</span>: [<span class="hljs-string">"es2015"</span>],
+            <span class="hljs-attr">plugins</span>: [
+                [<span class="hljs-string">"transform-react-jsx"</span>]
+            ]
+        }
+    })
+]</code></pre>
+            <p><code>limit2project</code> set to true, to use this plugin across an entire project (including other modules like npm)</p>
+            <p>Note, that if you want to have sourcemaps in place, set <code>sourceMaps</code> to true. Read sourcemaps section for better understanding how sourcemaps are defined.</p>
+            <h2 id="json-plugin">JSON plugin</h2>
+            <p>Of course, it can&#39;t be all shiny without a JSON plugin, can it?</p> <pre class="highlight js"><code>plugins: [
+    fsbx.JSONPlugin()
+]</code></pre>
+            <h2 id="svg-plugin">SVG Plugin</h2>
+            <p>React lovers, <a href="https://github.com/fuse-box/react-example/blob/master/gulpfile.js#L17">here it is</a>. Plain and simple.</p> <pre class="highlight js"><code>plugins: [
+    fsbx.SVGPlugin()
+]</code></pre>
+            <h2 id="bannerplugin">BannerPlugin</h2>
+            <p>Add anything at the top of your bundle.</p> <pre class="highlight js"><code>plugins: [
+    <span class="hljs-comment">// Add a banner to bundle output</span>
+    fsbx.BannerPlugin(<span class="hljs-string">'// Hey this is my banner! Copyright 2016!'</span>)
+]</code></pre>
+            <h2 id="uglifyjsplugin">UglifyJSPlugin</h2>
+            <p>Compresses your code by <a href="https://github.com/mishoo/UglifyJS2">UglifyJS2</a></p> <pre class="highlight js"><code>plugins: [
+    <span class="hljs-comment">// [options] - UglifyJS2 options</span>
+    fsbx.UglifyJSPlugin(options)
+]</code></pre>
+            <h2 id="sourcemapplainjsplugin">SourceMapPlainJsPlugin</h2>
+            <p><code>npm i source-map</code></p> <pre class="highlight js"><code>sourceMap: {
+  <span class="hljs-attr">bundleReference</span>: <span class="hljs-string">"sourcemaps.js.map"</span>,
+  <span class="hljs-attr">outFile</span>: <span class="hljs-string">"sourcemaps.js.map"</span>,
+},
+<span class="hljs-attr">plugins</span>: [
+    fsbx.SourceMapPlainJsPlugin();
+]</code></pre>
+            <h2 id="envplugin">EnvPlugin</h2>
+            <p>Writes environmental variables to both client and server at build time.</p> <pre class="highlight js"><code>plugins : [
+   fsbx.EnvPlugin({ <span class="hljs-attr">NODE_ENV</span>: <span class="hljs-string">"production"</span> })
+]</code></pre>
+            <p>Access it like you used to:</p> <pre class="highlight undefined"><code><span class="hljs-selector-tag">console</span><span class="hljs-selector-class">.log</span>( <span class="hljs-selector-tag">process</span><span class="hljs-selector-class">.env</span><span class="hljs-selector-class">.NODE_ENV</span> )</code></pre>
+            <h2
+              id="typescript-helpers">Typescript helpers</h2>
+              <p>A very handy plugin, adds required typescript functions to the bundle. Please note that it adds only the ones that are actually used. So you won&#39;t be seeing an unnecessary code.</p>
+              <p>Please, check this <a href="https://github.com/fuse-box/fuse-box/tree/master/assets/libs/fuse-typescript-helpers">list</a></p>
+              <p>Available helpers:</p>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>__assign</td>
+                    <td>Generic typescript helper</td>
+                  </tr>
+                  <tr>
+                    <td>__awaiter</td>
+                    <td>Generic typescript helper</td>
+                  </tr>
+                  <tr>
+                    <td>__decorator</td>
+                    <td>Generic typescript helper + additional fusebox meta data patched</td>
+                  </tr>
+                  <tr>
+                    <td>__extends</td>
+                    <td>Generic typescript helper</td>
+                  </tr>
+                  <tr>
+                    <td>__generator</td>
+                    <td>Generic typescript helper</td>
+                  </tr>
+                  <tr>
+                    <td>__param</td>
+                    <td>Generic typescript helper</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>If you spot an error or a missing helper, please, submit an issue, or a pull request. If you feel impatient enough, you can always create your own plugin, based on this class <a href="https://github.com/fuse-box/fuse-box/blob/master/src/plugins/TypeScriptHelpers.ts">code</a></p>
+              <h3 id="using-the-plugin">Using the plugin</h3>
+              <p>Simply add TypeScriptHelpers to your plugin list. No further configuration required. FuseBox will take care of everything else. To avoid unnecessary AST (which is heavy) this plugin does a simple RegExp, and tests for declarations. It is
+                absolutely safe, and your code is not modified in any way. </p> <pre class="highlight js"><code><span class="hljs-keyword">const</span> fsbx = <span class="hljs-built_in">require</span>(<span class="hljs-string">"fuse-box"</span>);
+<span class="hljs-keyword">let</span> fuseBox = fsbx.FuseBox.init({
+    <span class="hljs-attr">homeDir</span>: <span class="hljs-string">"test/fixtures/cases/ts"</span>,
+    <span class="hljs-attr">outFile</span>: <span class="hljs-string">"./out.js"</span>,
+    <span class="hljs-attr">plugins</span>: [fsbx.TypeScriptHelpers()]
+});</code></pre>
+              <h3 id="extended-metadata-properties">Extended metadata properties</h3>
+              <p>You can have access to the entire environment of a file, using reflect-metadata. Make sure you have it installed first</p> <pre class="highlight bash"><code>npm install reflect-metadata</code></pre>
+              <p>Then, include it in your entry point</p> <pre class="highlight js"><code><span class="hljs-keyword">import</span> <span class="hljs-string">"reflect-metadata"</span>;</code></pre>
+              <p>Now, you can access &quot;commonjs&quot; variables via fusebox metadata property</p> <pre class="highlight js"><code><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">testDecorator</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">target, key: string, descriptor: PropertyDescriptor</span>) </span>{
+        <span class="hljs-built_in">Reflect</span>.getMetadata(<span class="hljs-string">"fusebox:__filename"</span>, target, key);
+        <span class="hljs-built_in">Reflect</span>.getMetadata(<span class="hljs-string">"fusebox:__dirname"</span>, target, key);
+        <span class="hljs-built_in">Reflect</span>.getMetadata(<span class="hljs-string">"fusebox:require"</span>, target, key); <span class="hljs-comment">// Local "require" function</span>
+        <span class="hljs-built_in">Reflect</span>.getMetadata(<span class="hljs-string">"fusebox:module"</span>, target, key);
+        <span class="hljs-built_in">Reflect</span>.getMetadata(<span class="hljs-string">"fusebox:exports"</span>, target, key);
+    }
+}</code></pre> </div>
+      <div class="dark-box">
+        <div class="lang-selector"> <a href="#" data-language-name="javascript">javascript</a> </div>
+      </div>
+    </div>
+  </body>
+
+</html>
