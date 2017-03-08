@@ -13,11 +13,13 @@ includes:
   - configuration
   - bundle
   - typescript
+  - rollup
   - loader-api
   - plugin-api
   - devserver
   - tips
   - builtin-plugins
+  - third-party-plugins
 
 search: true
 
